@@ -1,0 +1,102 @@
+module GhostAlgo ( // test version
+    input i_clk,
+    input i_rst,
+    input [2:0] pac_x,
+    input [2:0] pac_y,
+    
+    output [2:0] o_x_location,
+    output [2:0] o_y_location,
+    output reach
+    
+);
+
+// * 0 1 0 1
+// 1 0 0 1 0
+// 1 1 0 1 0
+// 1 0 0 0 0
+// 1 0 0 1 X
+
+//    0 1 2 3 4
+// 0: G 0 0 0 0
+// 1: 0 0 0 0 0
+// 2: 0 0 0 0 0
+// 3: 0 0 0 0 0
+// 4: 0 0 0 0 P
+
+logic [2:0] r_x_location;
+logic [2:0] r_y_location;
+logic r_reach;
+
+reg[23:0] rand;
+// rand = $random % 2; // -1, 0, 1
+
+
+
+always_comb begin
+
+    if (r_x_location == pac_x && r_y_location == pac_y) begin
+        r_reach = 1'b1;
+    end
+    
+    else if (r_x_location < pac_x && r_y_location < pac_y) begin
+        if (rand == 0) begin // right
+            r_x_location = r_x_location + 1'b1;
+        end
+        else begin // down
+            r_y_location = r_y_location + 1'b1;
+        end
+        
+    end
+    
+    else if (r_x_location > pac_x && r_y_location > pac_y) begin
+        if (rand == 0) begin // left
+            r_x_location = r_x_location - 1'b1;
+        end
+        else begin // up
+            r_y_location = r_y_location - 1'b1;
+        end
+        
+    end
+    
+    else if (r_x_location == pac_x && r_y_location < pac_y) begin
+        r_y_location = r_y_location + 1'b1;
+    end
+    
+    else if (r_x_location == pac_x && r_y_location > pac_y) begin
+        r_y_location = r_y_location - 1'b1;
+    end
+    
+    else if (r_y_location == pac_y && r_x_location < pac_x) begin
+        r_x_location = r_x_location + 1'b1;
+    end
+    
+    else if (r_y_location == pac_y && r_x_location > pac_x) begin
+        r_x_location = r_x_location - 1'b1;
+    end
+    
+    else begin
+        r_x_location = r_x_location;
+        r_y_location = r_y_location;
+    end
+    
+end
+
+always_ff @(posedge i_clk) begin
+    if (i_rst) begin
+        o_x_location <= 3'd0;
+        o_y_location <= 3'd0;
+        r_x_location <= 3'd0;
+        r_y_location <= 3'd0;
+        rand <= 24'd0;
+        reach <= 1'b0;
+    end
+    else begin
+        o_x_location <= r_x_location;
+        o_y_location <= r_y_location;
+        rand <= {$random()} % 2; // 0, 1
+        reach <= r_reach;
+    end
+end
+        
+
+endmodule
