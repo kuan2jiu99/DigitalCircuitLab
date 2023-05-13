@@ -1,4 +1,4 @@
-# DCLAB
+## Digital Circuit Lab (DCLAB)
 2021 Fall, Digital Circuit Lab (DCLAB), NTUEE
 
 ## Lab1 
