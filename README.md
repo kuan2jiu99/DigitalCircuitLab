@@ -2,13 +2,13 @@
 2021 Fall, Digital Circuit Lab (DCLAB), NTUEE
 
 ## Lab1 
-亂數點名器
+Random Number Generator
 
 ## Lab2 
-RSA256 解密機
+RSA-256 Decryption
 
 ## Lab3 
-數位錄音機
+Digital Recorder
 
 ## Final Project
 Pac-Man
