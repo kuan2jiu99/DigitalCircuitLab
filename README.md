@@ -1,6 +1,5 @@
 ## Digital Circuit Lab (DCLAB)
-2021 Fall, Digital Circuit Lab (DCLAB)  
-National Taiwan University, Department of Electrical Engineering
+2021 Fall, National Taiwan University, Department of Electrical Engineering
 
 ## Lab1 
 Random Number Generator
